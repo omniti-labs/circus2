@@ -1,4 +1,20 @@
 #!/usr/bin/env python
+"""
+circonus_add.py - Read in a json file of circonus resources and bulk-add them
+
+This command accepts a json formatted file, with multiple circonus resources
+(check bundles, rule sets etc), and adds them to circonus in bulk. The command
+accepts two different file formats:
+
+    * A list of resources, with the endpoint stored in the '_cid' attribute
+    * A json object, with the keys being the endpoint, and the values being
+      the resource itself. Duplicate keys _are_ allowed (for adding multiple
+      resources to the same endpoint).
+
+The content of each resource is sent directly to the API. See the API
+documentation for information on what this should contain, or use circonusvi
+to take a look at existing resources for examples.
+"""
 import getopt
 import json
 import re
