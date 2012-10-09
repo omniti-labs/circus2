@@ -136,10 +136,13 @@ if __name__ == '__main__':
     try:
         params['target'] = args[0]
         params['friendly_name'] = args[1]
-        params['pattern'] = args[2]
     except IndexError:
         usage(params)
         sys.exit(1)
+    try:
+        params['pattern'] = args[2]
+    except IndexError:
+        params['pattern'] = None
 
     # Now initialize the API
     api_token = c.get('tokens', account)
