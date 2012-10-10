@@ -100,19 +100,8 @@ class Template(object):
     def len_filter(self, s):
         return str(len(s))
 
-
-class GraphTemplate(Template):
-    def __init__(self, name):
-        super(GraphTemplate, self).__init__(name, "graph")
-
-    def get_metrics(self):
-        """Returns a list of metrics specified in the graph template"""
-        return [i['metric_name'] for i in self.template['datapoints']]
-
-    def _process_str(self, s, params):
-        # Special case the check_id - make it an integer if it's the only
-        # thing present in the string
-
-        if s == "{check_id}":
-            return int(params['check_id'])
-        return super(GraphTemplate, self)._process_str(s, params)
+    def strip_endpoint_filter(self, s):
+        """Strips the endpoint off of a resource id, leaving only the id
+        itself. E.g. /check_bundle/12345 => 12345
+        """
+        return re.sub("/[a-z_]+/", "", s)
