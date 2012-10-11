@@ -73,10 +73,10 @@ def run_query(params, api):
     for r in results:
         match = re.search(v, r[k])
         if match:
-            for i, v in enumerate(match.groups()):
+            for i, j in enumerate(match.groups()):
                 # Adds group1, group2 etc. variables
-                r['group%s' % (i+1)] = v
-                filtered_results.append(r)
+                r['group%s' % (i+1)] = j
+            filtered_results.append(r)
 
     return filtered_results
 
@@ -101,7 +101,6 @@ def merge_params(static_vars, resource):
     merged_params = {}
     merged_params.update(static_vars)
     merged_params.update(flatten_dict(resource))
-    print merged_params
     return merged_params
 
 if __name__ == '__main__':
