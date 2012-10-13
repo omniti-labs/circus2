@@ -65,7 +65,7 @@ Arguments:
     print "  -f -- filter on the query (default: %s)" % (params['filter'])
 
 def run_query(params, api):
-    log.debug("Querying endpoint: %s" % params['endpoint'])
+    log.msg("Querying endpoint: %s" % params['endpoint'])
     results = api.api_call("GET", params['endpoint'])
     filtered_results = []
     k, v = params['filter'].split('=', 1)
@@ -155,7 +155,31 @@ if __name__ == '__main__':
         merged_params = merge_params(params['vars'], r)
         processed = t.sub(merged_params)
         to_add.append(processed)
+    log.msg("Adding the following:")
+    # Mapping of endpoints to which attribute is used as a friendly name
+    # TODO - add this as a library function?
+    title_fields = {
+        "/graph": "title",
+        "/check_bundle": "display_name",
+        "/rule_set": "metric_name",
+        "/worksheet": "description",
+        "/template": "name",
+        "/contact_group": "name",
+        "/account": "name",
+        "/broker": "_name",
+        "/user": "email"
+    }
+    for r in to_add:
+        field = title_fields[r['_cid']]
+        log.msg(r[field])
     if util.confirm("%s additions to be made. Continue?" % len(to_add)):
-        for i in range(0, len(to_add)):
-            log.msgnb("Adding entry %s..." % i)
-            api.api_call("POST", to_add[i]['_cid'], to_add[i])
+        for r in to_add:
+            field = title_fields[r['_cid']]
+            log.msgnb("Adding entry %s..." % r[field])
+            try:
+                api.api_call("POST", r['_cid'], r)
+            except circonusapi.CirconusAPIError, e:
+                log.msgnf("Failed")
+                log.error(e)
+                continue
+            log.msgnf("Success")
