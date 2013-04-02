@@ -14,27 +14,13 @@ titles) that isn't available by querying existing resources.
    for. The _cid value shouldn't have a resource ID at the end, so be sure to
    strip it if you are using output from the api to make a template.
 
-TODO (docs)
-
-    * Variable filters {foo:filtername}
-    * matching groups from the query filter (e.g. extracting information from
-        the check name to put in the graph title)
-    * How to make a template:
-        * Grab json for an existing resource (e.g. using circonusvi)
-        * Add/edit a '_cid' entry with the endpoint.
-        * Add a '__comment' entry with information on the template
-            * Show an example of what to include based on switch.json
-        * Edit out information you want to be different for each entry
-            * check_id is a good one (set to "{_cid}")
-            * use matching groups if you need to extract part of a result
-              (such as a check's display name) and put it in the template.
-              See the switch graph for an example.
-
 Example - adding graphs for all checks on switch-foo:
 
     ./add_template_resource.py \
             -f 'display_name=(switch-foo) port (.*)' \
             switch_graph.json
+
+For more information, see the add_templated_resource.md file.
 """
 
 import getopt
