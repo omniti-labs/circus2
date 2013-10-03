@@ -5,6 +5,8 @@
    existing resources (e.g. checks) that match a given pattern.
  * circonus_add - Reads in a json file of circonus resources and adds them in
    bulk.
+ * tag - Bulk tag checks/graphs/worksheets based on a regex match on their
+   title/name.
 
 Documentation for each tool is provided at the top of each tool's source file,
 or in a .md file of the same name as the tool.
