@@ -140,7 +140,12 @@ if __name__ == '__main__':
     for r in results:
         merged_params = merge_params(params['vars'], r)
         processed = t.sub(merged_params)
-        to_add.append(processed)
+        # Allow multiple resources per template by making the template into a
+        # list
+        if type(processed) == list:
+            to_add.extend(processed)
+        else:
+            to_add.append(processed)
     log.msg("Adding the following:")
     # Mapping of endpoints to which attribute is used as a friendly name
     # TODO - add this as a library function?

@@ -152,6 +152,13 @@ recommendations for keys to include in a comment:
    matching groups should be used for (e.g. first matching group should be the
    server name, the second matching group should match the port)
 
+### Templates with multiple resources
+
+A template is normally a single json object (hash, map, dictionary) with a
+single resource to add. However, the template can also be a list of objects
+containing multiple resources to add (e.g. multiple graphs for the same check)
+and all of them will be added.
+
 ### Walk through of template creation
 
 The following is a walk through for creating a website latency graph template,
